@@ -1,24 +1,26 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { Stage, Layer, Line } from "react-konva";
+import { Stage, Layer, Text, Image } from "react-konva";
+import useImage from "use-image";
 
 const App = () => {
+  const url = "https://konvajs.org/assets/yoda.jpg";
+  const [image] = useImage(url);
+  const handelMouseOver = (e) => {
+    const container = e.target.getStage().container();
+    container.style.cursor = "pointer";
+  };
+  const handelMouseOut = (e) => {
+    const container = e.target.getStage().container();
+    container.style.cursor = "default";
+  };
   return (
     <Stage width={window.innerWidth} height={window.innerHeight}>
       <Layer>
-        <Line
-          y={50}
-          points={[10, 70, 40, 23, 150, 60, 250, 20]}
-          stroke={"blue"}
-          strokeWidth={10}
-          lineCap={"round"}
-          lineJoin={"round"}
-          /*
-           * line segments with a length of 29px with a gap
-           * of 20px followed by a line segment of 0.001px (a dot)
-           * followed by a gap of 20px
-           */
-          dash={[29, 20, 0.001, 20]}
+        <Image
+          image={image}
+          onMouseOver={handelMouseOver}
+          onMouseOut={handelMouseOut}
           draggable
         />
       </Layer>
